@@ -51,7 +51,7 @@ NyayaLens AI is tailored specifically to Indian legislative structures.
 
 Frontend:
 - Next.js (Latest)
-- TailwindCSS
+- **Vanilla CSS (BEM & Semantic Custom Properties)**
 
 Backend:
 - FastAPI

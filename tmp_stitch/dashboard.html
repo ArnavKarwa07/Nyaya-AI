@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed-dim": "#ffb77a",
+              "surface-dim": "#d9dadc",
+              "on-secondary": "#ffffff",
+              "surface-variant": "#e2e2e4",
+              "on-surface": "#1a1c1d",
+              "on-surface-variant": "#454652",
+              "tertiary-fixed": "#96f7af",
+              "on-secondary-fixed": "#000767",
+              "primary-container": "#4c2600",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed": "#ffdcc2",
+              "primary": "#2d1500",
+              "secondary": "#4c56af",
+              "secondary-fixed-dim": "#bdc2ff",
+              "surface-tint": "#8f4e00",
+              "inverse-primary": "#ffb77a",
+              "outline": "#767683",
+              "secondary-fixed": "#e0e0ff",
+              "on-primary-fixed-variant": "#6d3a00",
+              "on-secondary-fixed-variant": "#343d96",
+              "inverse-on-surface": "#f0f0f2",
+              "outline-variant": "#c6c5d4",
+              "surface-bright": "#f9f9fb",
+              "on-tertiary-fixed": "#00210c",
+              "on-background": "#1a1c1d",
+              "error": "#ba1a1a",
+              "on-tertiary": "#ffffff",
+              "on-error-container": "#93000a",
+              "on-primary-container": "#df8017",
+              "surface-container-high": "#e8e8ea",
+              "tertiary": "#00200c",
+              "on-primary-fixed": "#2e1500",
+              "on-tertiary-fixed-variant": "#005228",
+              "secondary-container": "#959efd",
+              "tertiary-container": "#003819",
+              "background": "#f9f9fb",
+              "surface": "#f9f9fb",
+              "on-tertiary-container": "#4aa969",
+              "surface-container-low": "#f3f3f5",
+              "on-error": "#ffffff",
+              "surface-container-highest": "#e2e2e4",
+              "tertiary-fixed-dim": "#7ada95",
+              "on-secondary-container": "#27308a",
+              "surface-container": "#eeeef0",
+              "on-primary": "#ffffff",
+              "error-container": "#ffdad6",
+              "inverse-surface": "#2f3132"
+            },
+            fontFamily: {
+              "headline": ["Newsreader"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        h1, h2, h3, .serif-font { font-family: 'Newsreader', serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface flex min-h-screen">
+<!-- Sidebar Shell -->
+<aside class="flex flex-col h-full sticky top-0 left-0 h-screen w-64 border-r-0 bg-slate-50 dark:bg-slate-900 font-['Plus_Jakarta_Sans'] text-sm font-medium z-50">
+<div class="px-6 py-8">
+<div class="flex items-center gap-3 mb-10">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">balance</span>
+</div>
+<div>
+<h1 class="font-['Newsreader'] text-xl font-bold text-[#1A237E] dark:text-blue-200 leading-tight">NyayaLens</h1>
+<p class="text-[10px] tracking-widest uppercase text-slate-500 font-bold">The Digital Jurist</p>
+</div>
+</div>
+<button class="w-full py-3 px-4 mb-8 bg-primary-container text-on-primary-fixed font-bold rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm">add</span>
+                New Research
+            </button>
+<nav class="space-y-1">
+<!-- Dashboard Active -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-white dark:bg-slate-800 text-[#1A237E] dark:text-blue-200 border-l-4 border-[#FFD700] Active: scale-98 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:text-[#1A237E] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span>Intelligence</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:text-[#1A237E] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">library_books</span>
+<span>Library</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:text-[#1A237E] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span>Knowledge Graph</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:text-[#1A237E] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span>Admin</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto px-6 py-8 border-t border-slate-100 dark:border-slate-800">
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:text-[#1A237E] transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:text-[#1A237E] transition-colors" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span>Help</span>
+</a>
+</nav>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col min-w-0 bg-surface">
+<!-- TopAppBar -->
+<header class="w-full h-16 sticky top-0 z-40 flex items-center justify-between px-8 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none font-['Plus_Jakarta_Sans'] text-sm">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-[#1A237E]/20 text-on-surface" placeholder="Search case law, statutes, or internal research..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6 ml-8">
+<nav class="hidden md:flex gap-6">
+<a class="text-[#1A237E] font-bold" href="#">Workspaces</a>
+</nav>
+<div class="flex items-center gap-4 text-slate-600 dark:text-slate-400">
+<button class="hover:text-[#1A237E] transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="hover:text-[#1A237E] transition-colors"><span class="material-symbols-outlined">help_center</span></button>
+<div class="h-8 w-8 rounded-full bg-slate-200 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Professional headshot of a legal counsel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8YB3M67d_HGz_6j8XtPXwdQsj1I4cH5ntGAKmjFI5WvoMMNl6svYyCtZ7ODkTqKALEvQw2RM_QiQnhMTrRcK5TQrE4lgHX0Hzl7-T5tU9AxXCSmqBlPnMyvhzPBTQy_-pmn--TG7SCvS2MC3TZyEWmbRXHFbbQH3CVc7omJXbYm6TzUlAu06I1YyjDgubVPjhkbCSUhjqwM1hMxJ_88jIv3wIflHUFPz2BYKQvaZapsYR9PvC6fIwYgP5ZBu7ThQKwNlB9PVYuvM"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Body -->
+<div class="p-8 space-y-12">
+<!-- Hero Section: System Evaluation & Insights -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- System Accuracy (Left Anchor) -->
+<div class="lg:col-span-4 bg-primary text-white rounded-xl p-8 flex flex-col justify-between relative overflow-hidden">
+<div class="relative z-10">
+<p class="text-primary-fixed-dim font-bold text-xs uppercase tracking-widest mb-4">Core Engine Performance</p>
+<h2 class="text-4xl font-headline mb-2">Retrieval Accuracy</h2>
+<div class="flex items-baseline gap-2">
+<span class="text-6xl font-headline font-bold text-white">98<span class="text-3xl opacity-60">%</span></span>
+</div>
+</div>
+<div class="mt-8 relative z-10">
+<div class="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary-fixed-dim w-[98%]"></div>
+</div>
+<p class="mt-3 text-sm text-primary-fixed opacity-80">Benchmarks exceeding industry standard by 14%</p>
+</div>
+<!-- Abstract graphic layer -->
+<div class="absolute -right-12 -bottom-12 w-48 h-48 bg-primary-container rounded-full opacity-30 blur-3xl"></div>
+</div>
+<!-- Insights at a Glance Bento -->
+<div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-error">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="text-[10px] font-bold text-error uppercase tracking-tighter">High Severity</span>
+</div>
+<h3 class="text-lg font-headline font-bold text-on-surface mb-1">Active Conflicts Detected</h3>
+<p class="text-4xl font-headline text-on-surface">12</p>
+<p class="mt-2 text-sm text-on-surface-variant">Non-compete overlaps in Project Zenith documents.</p>
+</div>
+<div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-surface-tint">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-surface-tint" style="font-variation-settings: 'FILL' 1;">gavel</span>
+<span class="text-[10px] font-bold text-surface-tint uppercase tracking-tighter">Monitoring</span>
+</div>
+<h3 class="text-lg font-headline font-bold text-on-surface mb-1">New Amendments Tracked</h3>
+<p class="text-4xl font-headline text-on-surface">04</p>
+<p class="mt-2 text-sm text-on-surface-variant">Update to Maharashtra GST Regulation Act 2024.</p>
+</div>
+</div>
+</section>
+<!-- Quick Actions Section -->
+<section>
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-2xl font-headline font-semibold text-on-surface">Quick Actions</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Upload -->
+<div class="group bg-surface-container-lowest border border-outline-variant/15 rounded-xl p-8 hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-start gap-6">
+<div class="w-16 h-16 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-4xl">cloud_upload</span>
+</div>
+<div class="flex-1">
+<h3 class="text-xl font-headline font-bold text-on-surface mb-2">Upload Document</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Drag and drop legal PDFs, scans or briefs. NyayaLens will automatically index and parse clauses.</p>
+</div>
+<span class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+</div>
+<!-- Ask -->
+<div class="group bg-surface-container-lowest border border-outline-variant/15 rounded-xl p-8 hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-start gap-6">
+<div class="w-16 h-16 rounded-xl bg-tertiary-container/10 flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined text-4xl">chat_bubble_outline</span>
+</div>
+<div class="flex-1">
+<h3 class="text-xl font-headline font-bold text-on-surface mb-2">Ask Legal Query</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Inquire about precedence, risk assessment, or specific statute interpretations across your library.</p>
+</div>
+<span class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Research Table -->
+<section class="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/15">
+<div class="px-8 py-6 border-b border-outline-variant/10 flex items-center justify-between">
+<h2 class="text-2xl font-headline font-semibold text-on-surface">Recent Research</h2>
+<button class="text-sm font-bold text-secondary hover:underline">View All Documents</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low/50 text-[10px] font-bold text-outline uppercase tracking-widest">
+<th class="px-8 py-4">Document Name</th>
+<th class="px-8 py-4">Clauses Extracted</th>
+<th class="px-8 py-4">Last Analyzed</th>
+<th class="px-8 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-primary-fixed-variant">description</span>
+<span class="font-bold text-on-surface">Service_Agreement_v4_Aether.pdf</span>
+</div>
+</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<div class="h-1.5 w-1.5 rounded-full bg-on-tertiary-container"></div>
+<span class="text-sm text-on-surface-variant font-medium">42 Clauses</span>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="text-sm text-on-surface-variant">2 hours ago</span>
+</td>
+<td class="px-8 py-5 text-right space-x-2">
+<button class="px-4 py-1.5 text-xs font-bold text-secondary bg-secondary-fixed/30 rounded-full hover:bg-secondary-fixed transition-colors">Chat</button>
+<button class="px-4 py-1.5 text-xs font-bold text-on-surface-variant bg-surface-container-high rounded-full hover:bg-surface-container-highest transition-colors">Summarize</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-primary-fixed-variant">article</span>
+<span class="font-bold text-on-surface">NDAs_Batch_Q3_Consolidated.pdf</span>
+</div>
+</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<div class="h-1.5 w-1.5 rounded-full bg-on-tertiary-container"></div>
+<span class="text-sm text-on-surface-variant font-medium">128 Clauses</span>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="text-sm text-on-surface-variant">Yesterday</span>
+</td>
+<td class="px-8 py-5 text-right space-x-2">
+<button class="px-4 py-1.5 text-xs font-bold text-secondary bg-secondary-fixed/30 rounded-full hover:bg-secondary-fixed transition-colors">Chat</button>
+<button class="px-4 py-1.5 text-xs font-bold text-on-surface-variant bg-surface-container-high rounded-full hover:bg-surface-container-highest transition-colors">Summarize</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error">gavel</span>
+<span class="font-bold text-on-surface">Arbitration_Claim_2023_012.pdf</span>
+</div>
+</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<div class="h-1.5 w-1.5 rounded-full bg-error"></div>
+<span class="text-sm text-on-surface-variant font-medium">15 Clauses (High Risk)</span>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="text-sm text-on-surface-variant">3 days ago</span>
+</td>
+<td class="px-8 py-5 text-right space-x-2">
+<button class="px-4 py-1.5 text-xs font-bold text-secondary bg-secondary-fixed/30 rounded-full hover:bg-secondary-fixed transition-colors">Chat</button>
+<button class="px-4 py-1.5 text-xs font-bold text-on-surface-variant bg-surface-container-high rounded-full hover:bg-surface-container-highest transition-colors">Summarize</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+</body></html>

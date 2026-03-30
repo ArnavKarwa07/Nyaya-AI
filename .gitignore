@@ -1,0 +1,25 @@
+# Node
+node_modules/
+.next/
+out/
+build/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+.venv
+*.sqlite3
+*.db
+sql_app.db
+
+# OS
+.DS_Store
+Thumbs.db

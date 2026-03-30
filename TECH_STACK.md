@@ -3,8 +3,8 @@
 ## Frontend
 
 - Next.js (Latest)
-- TailwindCSS
-- React Flow
+- Vanilla CSS (Material Design 3 inspired design system)
+- Framer Motion (animations)
 
 ---
 
@@ -18,7 +18,7 @@
 
 ## AI & NLP
 
-- Groq LLM API
+- Google Gemini API (configurable via GEMINI_MODEL env var)
 - HuggingFace Transformers
 - spaCy
 
@@ -33,7 +33,7 @@ Graph DB:
 - Neo4j
 
 Primary DB:
-- PostgreSQL
+- SQLite (development) / PostgreSQL (production)
 
 Memory Store:
 - Redis (reasoning memory & feedback signals)
