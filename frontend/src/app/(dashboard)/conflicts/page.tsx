@@ -1,47 +1,96 @@
-"use client"
-import { useState } from 'react'
+"use client";
+import { useState } from "react";
+import { secureFetch } from "@/lib/api";
 
 export default function ConflictsPage() {
-  const [sourceText, setSourceText] = useState("IPC Section 124A - Sedition: Whoever, by words, either spoken or written, or by signs, or by visible representation, or otherwise, brings or attempts to bring into hatred or contempt, or excites or attempts to excite disaffection towards the Government established by law in India.")
-  const [targetText, setTargetText] = useState("BNS Section 150 - Acts endangering sovereignty, unity and integrity of India: Whoever, purposely or knowingly, by words, either spoken or written, or by signs, or by visible representation, or by electronic communication or by use of financial mean, or otherwise, excites or attempts to excite, secession or armed rebellion or subversive activities, or encourages feelings of separatist activities or endangers sovereignty or unity and integrity of India.")
-  const [result, setResult] = useState<{conflicts: Array<{severity: string; match: number; title: string; description: string; source: string; target: string}>; overall_confidence: number; ai_analysis: string} | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [sourceText, setSourceText] = useState("");
+  const [targetText, setTargetText] = useState("");
+  const [result, setResult] = useState<{
+    conflicts: Array<{
+      severity: string;
+      match: number;
+      title: string;
+      description: string;
+      source: string;
+      target: string;
+    }>;
+    overall_confidence: number;
+    ai_analysis: string;
+  } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleAnalyze = async () => {
     if (!sourceText.trim() || !targetText.trim() || isLoading) return;
     setIsLoading(true);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-      const res = await fetch(`${apiUrl}/conflicts/`, {
+      const res = await secureFetch("/conflicts/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ source_text: sourceText, target_text: targetText })
+        body: JSON.stringify({
+          source_text: sourceText,
+          target_text: targetText,
+        }),
       });
+      if (res.status === 401) {
+        setResult({
+          conflicts: [
+            {
+              severity: "Error",
+              match: 0,
+              title: "Session Expired",
+              description: "Please login again.",
+              source: "",
+              target: "",
+            },
+          ],
+          overall_confidence: 0,
+          ai_analysis: "Authorization failed.",
+        });
+        return;
+      }
       const data = await res.json();
       setResult(data);
     } catch {
       setResult({
-        conflicts: [{ severity: "Error", match: 0, title: "Connection Error", description: "Could not connect to the backend API.", source: "", target: "" }],
+        conflicts: [
+          {
+            severity: "Error",
+            match: 0,
+            title: "Connection Error",
+            description: "Could not connect to the backend API.",
+            source: "",
+            target: "",
+          },
+        ],
         overall_confidence: 0,
-        ai_analysis: "Failed to reach the backend server."
+        ai_analysis: "Failed to reach the backend server.",
       });
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="conflicts-container">
       <div className="conflicts-page-header">
         <h2 className="conflicts-page-title">Conflict Detection Dashboard</h2>
-        <p className="conflicts-page-desc">Automated cross-referencing between Indian legal acts to identify potential contradictions and procedural misalignments.</p>
+        <p className="conflicts-page-desc">
+          Automated cross-referencing between Indian legal acts to identify
+          potential contradictions and procedural misalignments.
+        </p>
       </div>
 
-      {/* Stats Row */}
+      <p className="analysis-subtitle">
+        Comparative analysis powered by NyayaLens AI
+      </p>
       <div className="conflicts-stats-row">
         <div className="conflicts-stat-card stat-error-border">
           <p className="stat-label">High Severity</p>
-          <p className="stat-value">{result ? result.conflicts.filter(c => c.severity === "High Risk").length : "—"}</p>
+          <p className="stat-value">
+            {result
+              ? result.conflicts.filter((c) => c.severity === "High Risk")
+                  .length
+              : "—"}
+          </p>
         </div>
         <div className="conflicts-stat-card stat-warning-border">
           <p className="stat-label">Total Conflicts</p>
@@ -49,11 +98,19 @@ export default function ConflictsPage() {
         </div>
         <div className="conflicts-stat-card stat-info-border">
           <p className="stat-label">AI Confidence</p>
-          <p className="stat-value">{result ? `${result.overall_confidence}%` : "—"}</p>
+          <p className="stat-value">
+            {result ? `${result.overall_confidence}%` : "—"}
+          </p>
         </div>
         <div className="conflicts-stat-card">
-          <button onClick={handleAnalyze} disabled={isLoading} className="conflicts-analyze-btn">
-            <span className="material-symbols-outlined icon-small">compare_arrows</span>
+          <button
+            onClick={handleAnalyze}
+            disabled={isLoading}
+            className="conflicts-analyze-btn"
+          >
+            <span className="material-symbols-outlined icon-small">
+              compare_arrows
+            </span>
             {isLoading ? "Analyzing..." : "Run Analysis"}
           </button>
         </div>
@@ -99,23 +156,33 @@ export default function ConflictsPage() {
               {result.conflicts.map((conflict, idx) => (
                 <div key={idx} className="conflict-card">
                   <div className="conflict-card-header">
-                    <span className={`conflict-severity-badge ${conflict.severity === 'High Risk' ? 'severity-high' : conflict.severity === 'Medium Risk' ? 'severity-medium' : 'severity-low'}`}>
+                    <span
+                      className={`conflict-severity-badge ${conflict.severity === "High Risk" ? "severity-high" : conflict.severity === "Medium Risk" ? "severity-medium" : "severity-low"}`}
+                    >
                       <span className="conflict-severity-dot"></span>
                       {conflict.severity}
                     </span>
-                    <span className="conflict-match-badge">{conflict.match}% Match</span>
+                    <span className="conflict-match-badge">
+                      {conflict.match}% Match
+                    </span>
                   </div>
                   <h4 className="conflict-title">{conflict.title}</h4>
                   <p className="conflict-desc">{conflict.description}</p>
                   <div className="conflict-references">
                     <div className="conflict-ref">
                       <span className="conflict-ref-label">Source</span>
-                      <span className="conflict-ref-value">{conflict.source}</span>
+                      <span className="conflict-ref-value">
+                        {conflict.source}
+                      </span>
                     </div>
-                    <span className="material-symbols-outlined conflict-arrow">arrow_forward</span>
+                    <span className="material-symbols-outlined conflict-arrow">
+                      arrow_forward
+                    </span>
                     <div className="conflict-ref">
                       <span className="conflict-ref-label">Target</span>
-                      <span className="conflict-ref-value">{conflict.target}</span>
+                      <span className="conflict-ref-value">
+                        {conflict.target}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -131,7 +198,9 @@ export default function ConflictsPage() {
               </div>
               <div>
                 <h3 className="analysis-title">AI Expert Analysis</h3>
-                <p className="analysis-subtitle">Comparative analysis powered by Gemini</p>
+                <p className="analysis-subtitle">
+                  Comparative analysis powered by Gemini
+                </p>
               </div>
             </div>
 
@@ -158,7 +227,9 @@ export default function ConflictsPage() {
             {/* Analysis text */}
             <div className="analysis-content">
               <h4 className="analysis-content-title">
-                <span className="material-symbols-outlined icon-small">auto_awesome</span>
+                <span className="material-symbols-outlined icon-small">
+                  auto_awesome
+                </span>
                 Detailed Analysis
               </h4>
               <p className="analysis-text">{result.ai_analysis}</p>
@@ -171,8 +242,12 @@ export default function ConflictsPage() {
       {isLoading && (
         <div className="conflicts-loading">
           <div className="conflicts-loading-inner">
-            <span className="material-symbols-outlined conflicts-loading-icon">hourglass_top</span>
-            <p className="conflicts-loading-text">Analyzing legal texts for contradictions...</p>
+            <span className="material-symbols-outlined conflicts-loading-icon">
+              hourglass_top
+            </span>
+            <p className="conflicts-loading-text">
+              Analyzing legal texts for contradictions...
+            </p>
             <div className="loading-skeletons">
               <div className="skeleton-line long"></div>
               <div className="skeleton-line short"></div>
@@ -181,5 +256,5 @@ export default function ConflictsPage() {
         </div>
       )}
     </div>
-  )
+  );
 }

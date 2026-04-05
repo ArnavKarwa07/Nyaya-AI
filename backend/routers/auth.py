@@ -1,38 +1,37 @@
-from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
+from fastapi import APIRouter, Depends, HTTPException, Request
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 import bcrypt
 
 from backend.database import get_db
 from backend import models
+from backend.rate_limit import limiter
+from backend.security import create_access_token, validate_password_strength, validate_username
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
 class RegisterRequest(BaseModel):
-    username: str
-    password: str
+    username: str = Field(min_length=3, max_length=50)
+    password: str = Field(min_length=12, max_length=128)
 
 
 class LoginRequest(BaseModel):
-    username: str
-    password: str
+    username: str = Field(min_length=3, max_length=50)
+    password: str = Field(min_length=1, max_length=128)
 
 
 class AuthResponse(BaseModel):
     user_id: str
     message: str
+    access_token: str
+    token_type: str = "bearer"
 
 
 @router.post("/register", response_model=AuthResponse)
-def register(request: RegisterRequest, db: Session = Depends(get_db)):
-    username = request.username.strip()
-    password = request.password.strip()
-
-    if not username or len(username) < 3:
-        raise HTTPException(status_code=400, detail="Username must be at least 3 characters")
-    if not password or len(password) < 4:
-        raise HTTPException(status_code=400, detail="Password must be at least 4 characters")
+def register(body: RegisterRequest, db: Session = Depends(get_db)):
+    username = validate_username(body.username)
+    password = validate_password_strength(body.password)
 
     # Check if username already exists
     existing = db.query(models.User).filter(models.User.username == username).first()
@@ -47,13 +46,17 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_user)
 
-    return AuthResponse(user_id=username, message="Registration successful")
+    return AuthResponse(
+        user_id=username,
+        message="Registration successful",
+        access_token=create_access_token(username),
+    )
 
 
 @router.post("/login", response_model=AuthResponse)
-def login(request: LoginRequest, db: Session = Depends(get_db)):
-    username = request.username.strip()
-    password = request.password.strip()
+def login(body: LoginRequest, db: Session = Depends(get_db)):
+    username = validate_username(body.username)
+    password = body.password.strip()
 
     if not username or not password:
         raise HTTPException(status_code=400, detail="Username and password are required")
@@ -65,4 +68,8 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
     if not bcrypt.checkpw(password.encode("utf-8"), user.password_hash.encode("utf-8")):
         raise HTTPException(status_code=401, detail="Invalid username or password")
 
-    return AuthResponse(user_id=username, message="Login successful")
+    return AuthResponse(
+        user_id=username,
+        message="Login successful",
+        access_token=create_access_token(username),
+    )

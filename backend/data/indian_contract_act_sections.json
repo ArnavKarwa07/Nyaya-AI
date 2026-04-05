@@ -1,0 +1,152 @@
+[
+  {
+    "section": "Section 2",
+    "title": "Definitions",
+    "description": "Defines proposal, promise, consideration, agreement, reciprocal promises, void and voidable contracts.",
+    "chapter": "Chapter I - Preliminary"
+  },
+  {
+    "section": "Section 10",
+    "title": "What agreements are contracts",
+    "description": "All agreements are contracts if made by free consent of competent parties for lawful consideration and lawful object, and are not expressly declared void.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 11",
+    "title": "Who are competent to contract",
+    "description": "Every person is competent to contract who is of age of majority, of sound mind, and not disqualified by law.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 13",
+    "title": "Consent",
+    "description": "Two or more persons are said to consent when they agree upon the same thing in the same sense.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 14",
+    "title": "Free consent",
+    "description": "Consent is free when not caused by coercion, undue influence, fraud, misrepresentation, or mistake.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 15",
+    "title": "Coercion",
+    "description": "Coercion means committing or threatening to commit any act forbidden by IPC, or unlawful detaining or threatening to detain property, to cause a person to enter into an agreement.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 16",
+    "title": "Undue influence",
+    "description": "A contract is induced by undue influence where one party is in a position to dominate the will of the other and uses that position to obtain unfair advantage.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 17",
+    "title": "Fraud",
+    "description": "Fraud includes suggestion of untrue fact, active concealment, promise without intention to perform, or any act fitted to deceive.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 18",
+    "title": "Misrepresentation",
+    "description": "Includes positive assertion not warranted by information, breach of duty causing advantage by misleading another, and innocent mistake causing agreement.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 19",
+    "title": "Voidability where consent caused by coercion, fraud or misrepresentation",
+    "description": "When consent is caused by coercion, fraud or misrepresentation, contract is voidable at option of party whose consent was so caused.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 23",
+    "title": "What considerations and objects are lawful",
+    "description": "Consideration or object is unlawful if forbidden by law, defeats legal provisions, is fraudulent, involves injury, or is immoral/opposed to public policy.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 24",
+    "title": "Agreements void if consideration and objects unlawful in part",
+    "description": "If any part of a single consideration for one or more objects, or any one or any part of one of several considerations for a single object, is unlawful, agreement is void.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 25",
+    "title": "Agreement without consideration void",
+    "description": "Agreement made without consideration is void subject to recognized statutory exceptions.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 27",
+    "title": "Agreement in restraint of trade void",
+    "description": "Every agreement by which anyone is restrained from exercising lawful profession, trade or business is void, subject to statutory exceptions.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 28",
+    "title": "Agreements in restraint of legal proceedings void",
+    "description": "Agreements absolutely restricting rights under or in respect of contract by usual legal proceedings are void.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 29",
+    "title": "Agreements void for uncertainty",
+    "description": "Agreements the meaning of which is not certain or capable of being made certain are void.",
+    "chapter": "Chapter II - Of Contracts"
+  },
+  {
+    "section": "Section 32",
+    "title": "Enforcement of contingent contracts",
+    "description": "Contingent contracts to do or not do something if uncertain future event happens cannot be enforced until event has happened.",
+    "chapter": "Chapter III - Contingent Contracts"
+  },
+  {
+    "section": "Section 37",
+    "title": "Obligation of parties to contracts",
+    "description": "Parties to contract must either perform or offer to perform their respective promises unless performance dispensed with or excused.",
+    "chapter": "Chapter IV - Performance of Contracts"
+  },
+  {
+    "section": "Section 39",
+    "title": "Effect of refusal to perform promise wholly",
+    "description": "When party refuses to perform or disables itself from performing promise in entirety, promisee may terminate unless signified acquiescence.",
+    "chapter": "Chapter IV - Performance of Contracts"
+  },
+  {
+    "section": "Section 55",
+    "title": "Effect of failure to perform at fixed time",
+    "description": "When party promises to do certain thing at or before specified time and fails, contract may become voidable if time was of essence.",
+    "chapter": "Chapter V - Certain Relations Resembling Contracts"
+  },
+  {
+    "section": "Section 56",
+    "title": "Agreement to do impossible act",
+    "description": "Agreement to do impossible act is void; contract to do act becomes void when act becomes impossible or unlawful after contract.",
+    "chapter": "Chapter V - Certain Relations Resembling Contracts"
+  },
+  {
+    "section": "Section 62",
+    "title": "Effect of novation, rescission and alteration",
+    "description": "If parties substitute new contract, or rescind or alter it, original contract need not be performed.",
+    "chapter": "Chapter VI - Of the Consequences of Breach"
+  },
+  {
+    "section": "Section 63",
+    "title": "Promisee may dispense with or remit performance",
+    "description": "Promisee may dispense with or remit wholly or in part performance of promise made to him, or extend time, or accept satisfaction.",
+    "chapter": "Chapter VI - Of the Consequences of Breach"
+  },
+  {
+    "section": "Section 73",
+    "title": "Compensation for loss or damage caused by breach",
+    "description": "Party suffering by breach is entitled to compensation for loss or damage naturally arising in usual course of things or known to parties at contract formation.",
+    "chapter": "Chapter VI - Of the Consequences of Breach"
+  },
+  {
+    "section": "Section 74",
+    "title": "Compensation for breach where penalty stipulated",
+    "description": "When contract names sum to be paid on breach or contains penalty stipulation, aggrieved party is entitled to reasonable compensation not exceeding amount named.",
+    "chapter": "Chapter VI - Of the Consequences of Breach"
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "section": "Section 3",
+    "title": "Interpretation clause",
+    "description": "Defines key terms including fact, relevant, facts in issue, document, evidence, proved, disproved and not proved.",
+    "chapter": "Preliminary"
+  },
+  {
+    "section": "Section 5",
+    "title": "Evidence may be given of facts in issue and relevant facts",
+    "description": "Evidence can be given only of facts in issue and of such other facts as are declared relevant.",
+    "chapter": "Chapter I"
+  },
+  {
+    "section": "Section 6",
+    "title": "Res gestae",
+    "description": "Facts forming part of the same transaction are relevant whether they occurred at the same time and place or at different times and places.",
+    "chapter": "Chapter II"
+  },
+  {
+    "section": "Section 8",
+    "title": "Motive, preparation and previous or subsequent conduct",
+    "description": "Motive and conduct are relevant when they influence or are influenced by facts in issue.",
+    "chapter": "Chapter II"
+  },
+  {
+    "section": "Section 24",
+    "title": "Confession caused by inducement, threat or promise",
+    "description": "A confession is irrelevant in criminal proceedings if made due to inducement, threat or promise from a person in authority.",
+    "chapter": "Chapter II"
+  },
+  {
+    "section": "Section 25",
+    "title": "Confession to police officer not to be proved",
+    "description": "No confession made to a police officer shall be proved against a person accused of any offence.",
+    "chapter": "Chapter II"
+  },
+  {
+    "section": "Section 27",
+    "title": "Discovery statement",
+    "description": "When a fact is discovered in consequence of information from an accused in police custody, so much of that information as distinctly relates to the fact discovered may be proved.",
+    "chapter": "Chapter II"
+  },
+  {
+    "section": "Section 32",
+    "title": "Cases in which statement of relevant fact by person who is dead cannot be found",
+    "description": "Includes dying declarations and other statements made by unavailable persons in specified circumstances.",
+    "chapter": "Chapter II"
+  },
+  {
+    "section": "Section 45",
+    "title": "Opinions of experts",
+    "description": "When the court has to form an opinion on science, art, identity, foreign law or handwriting, expert opinion is relevant.",
+    "chapter": "Chapter II"
+  },
+  {
+    "section": "Section 60",
+    "title": "Oral evidence must be direct",
+    "description": "Oral evidence must be direct and based on what the witness saw, heard or perceived.",
+    "chapter": "Chapter IV"
+  },
+  {
+    "section": "Section 65B",
+    "title": "Admissibility of electronic records",
+    "description": "Electronic records are admissible subject to conditions and certification requirements prescribed by law.",
+    "chapter": "Chapter V"
+  },
+  {
+    "section": "Section 74",
+    "title": "Public documents",
+    "description": "Documents forming acts or records of acts of sovereign authority, official bodies, tribunals and public officers are public documents.",
+    "chapter": "Chapter V"
+  },
+  {
+    "section": "Section 101",
+    "title": "Burden of proof",
+    "description": "Whoever desires any court to give judgment as to any legal right or liability dependent on facts asserted by him must prove those facts.",
+    "chapter": "Chapter VII"
+  },
+  {
+    "section": "Section 102",
+    "title": "On whom burden of proof lies",
+    "description": "Burden lies on the party who would fail if no evidence were given on either side.",
+    "chapter": "Chapter VII"
+  },
+  {
+    "section": "Section 106",
+    "title": "Burden of proving fact especially within knowledge",
+    "description": "When any fact is especially within the knowledge of any person, the burden of proving that fact is upon him.",
+    "chapter": "Chapter VII"
+  },
+  {
+    "section": "Section 114",
+    "title": "Court may presume existence of certain facts",
+    "description": "Court may presume facts likely to have happened, having regard to common course of natural events and human conduct.",
+    "chapter": "Chapter VII"
+  },
+  {
+    "section": "Section 118",
+    "title": "Who may testify",
+    "description": "All persons are competent to testify unless they are prevented from understanding questions or giving rational answers due to tender years, extreme old age, disease, or similar causes.",
+    "chapter": "Chapter IX"
+  },
+  {
+    "section": "Section 134",
+    "title": "Number of witnesses",
+    "description": "No particular number of witnesses is required for proof of any fact.",
+    "chapter": "Chapter IX"
+  },
+  {
+    "section": "Section 137",
+    "title": "Examination-in-chief, cross-examination and re-examination",
+    "description": "Defines forms of witness examination.",
+    "chapter": "Chapter X"
+  },
+  {
+    "section": "Section 138",
+    "title": "Order of examinations",
+    "description": "Witnesses are first examined-in-chief, then cross-examined, and then re-examined.",
+    "chapter": "Chapter X"
+  }
+]

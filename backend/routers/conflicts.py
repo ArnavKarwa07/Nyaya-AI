@@ -1,14 +1,18 @@
-from fastapi import APIRouter
-from pydantic import BaseModel
-import google.generativeai as genai
+from fastapi import APIRouter, Depends, Request
+from pydantic import BaseModel, Field
+from langchain_groq import ChatGroq
+from langchain_core.messages import HumanMessage
 import os
+
+from backend.rate_limit import limiter
+from backend.security import get_current_user
 
 router = APIRouter(prefix="/conflicts", tags=["Conflicts"])
 
 
 class ConflictRequest(BaseModel):
-    source_text: str
-    target_text: str
+    source_text: str = Field(min_length=20, max_length=12000)
+    target_text: str = Field(min_length=20, max_length=12000)
 
 
 class ConflictItem(BaseModel):
@@ -27,18 +31,26 @@ class ConflictResponse(BaseModel):
 
 
 @router.post("/", response_model=ConflictResponse)
-def detect_conflicts(request: ConflictRequest):
-    model_name = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
-    model = genai.GenerativeModel(model_name)
+@limiter.limit("20/minute")
+def detect_conflicts(
+    request: Request,
+    payload: ConflictRequest,
+    current_user: str = Depends(get_current_user),
+):
+    _ = (request, current_user)
+    llm = ChatGroq(
+        model=os.getenv("GROQ_MODEL", "mixtral-8x7b-32768"),
+        api_key=os.getenv("GROQ_API_KEY", ""),
+    )
 
     prompt = f"""You are a legal conflict detection engine specializing in Indian law.
 Compare these two legal texts and identify contradictions, conflicts, or misalignments.
 
 SOURCE TEXT:
-{request.source_text}
+{payload.source_text}
 
 TARGET TEXT:
-{request.target_text}
+{payload.target_text}
 
 Analyze for:
 1. Terminology shifts without scope parity
@@ -60,8 +72,8 @@ ANALYSIS:
 """
 
     try:
-        result = model.generate_content(prompt)
-        text = result.text
+        result = llm.invoke([HumanMessage(content=prompt)])
+        text = result.content
 
         # Parse response
         confidence = 85.0
@@ -123,8 +135,8 @@ ANALYSIS:
                     "match": 0,
                     "title": "Analysis Complete",
                     "description": analysis[:200],
-                    "source": request.source_text[:50],
-                    "target": request.target_text[:50],
+                    "source": payload.source_text[:50],
+                    "target": payload.target_text[:50],
                 }
             ]
 
@@ -141,8 +153,8 @@ ANALYSIS:
                     "match": 0,
                     "title": "Analysis Failed",
                     "description": str(e),
-                    "source": request.source_text[:50],
-                    "target": request.target_text[:50],
+                    "source": payload.source_text[:50],
+                    "target": payload.target_text[:50],
                 }
             ],
             overall_confidence=0,

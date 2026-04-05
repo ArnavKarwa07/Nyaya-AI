@@ -1,15 +1,19 @@
-from fastapi import APIRouter
-from pydantic import BaseModel
-import google.generativeai as genai
+from fastapi import APIRouter, Depends, Request
+from pydantic import BaseModel, Field
+from langchain_groq import ChatGroq
+from langchain_core.messages import HumanMessage
 import os
+
+from backend.rate_limit import limiter
+from backend.security import get_current_user
 
 router = APIRouter(prefix="/amendments", tags=["Amendments"])
 
 
 class AmendmentCompareRequest(BaseModel):
-    old_text: str
-    new_text: str
-    document_title: str = "Legal Document"
+    old_text: str = Field(min_length=20, max_length=25000)
+    new_text: str = Field(min_length=20, max_length=25000)
+    document_title: str = Field(default="Legal Document", min_length=3, max_length=200)
 
 
 class AmendmentChange(BaseModel):
@@ -31,20 +35,28 @@ class AmendmentCompareResponse(BaseModel):
 
 
 @router.post("/compare", response_model=AmendmentCompareResponse)
-def compare_amendments(request: AmendmentCompareRequest):
-    model_name = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
-    model = genai.GenerativeModel(model_name)
+@limiter.limit("16/minute")
+def compare_amendments(
+    request: Request,
+    payload: AmendmentCompareRequest,
+    current_user: str = Depends(get_current_user),
+):
+    _ = (request, current_user)
+    llm = ChatGroq(
+        model=os.getenv("GROQ_MODEL", "mixtral-8x7b-32768"),
+        api_key=os.getenv("GROQ_API_KEY", ""),
+    )
 
     prompt = f"""You are an expert Indian legal amendment analyst.
 Compare these two versions of a legal document and identify all amendments, changes, additions, and deletions.
 
-DOCUMENT: {request.document_title}
+DOCUMENT: {payload.document_title}
 
 OLD VERSION:
-{request.old_text}
+{payload.old_text}
 
 NEW VERSION:
-{request.new_text}
+{payload.new_text}
 
 Format your response EXACTLY as follows:
 CONFIDENCE: [Score 0-100]
@@ -63,8 +75,8 @@ ANALYSIS:
 """
 
     try:
-        result = model.generate_content(prompt)
-        text = result.text
+        result = llm.invoke([HumanMessage(content=prompt)])
+        text = result.content
 
         confidence = 85
         additions = 0
@@ -143,8 +155,8 @@ ANALYSIS:
                 {
                     "clause": "General",
                     "change_type": "Modification",
-                    "old_content": request.old_text[:100],
-                    "new_content": request.new_text[:100],
+                    "old_content": payload.old_text[:100],
+                    "new_content": payload.new_text[:100],
                     "risk_level": "Medium Risk",
                     "impact_analysis": analysis[:200],
                 }

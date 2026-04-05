@@ -1,13 +1,17 @@
-from fastapi import APIRouter
-from pydantic import BaseModel
-import google.generativeai as genai
+from fastapi import APIRouter, Depends, Request
+from pydantic import BaseModel, Field
+from langchain_groq import ChatGroq
+from langchain_core.messages import HumanMessage
 import os
+
+from backend.rate_limit import limiter
+from backend.security import get_current_user
 
 router = APIRouter(prefix="/summarize", tags=["Summarize"])
 
 
 class SummarizeRequest(BaseModel):
-    document_text: str
+    document_text: str = Field(min_length=50, max_length=20000)
 
 
 class SummarizeResponse(BaseModel):
@@ -17,15 +21,23 @@ class SummarizeResponse(BaseModel):
 
 
 @router.post("/", response_model=SummarizeResponse)
-def summarize_document(request: SummarizeRequest):
-    model_name = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
-    model = genai.GenerativeModel(model_name)
+@limiter.limit("18/minute")
+def summarize_document(
+    request: Request,
+    payload: SummarizeRequest,
+    current_user: str = Depends(get_current_user),
+):
+    _ = (request, current_user)
+    llm = ChatGroq(
+        model=os.getenv("GROQ_MODEL", "mixtral-8x7b-32768"),
+        api_key=os.getenv("GROQ_API_KEY", ""),
+    )
 
     prompt = f"""You are an expert Indian legal document summarizer.
 Analyze the following legal text and provide a hierarchical summary.
 
 DOCUMENT TEXT:
-{request.document_text}
+{payload.document_text}
 
 Format your response EXACTLY as follows:
 CONFIDENCE: [Score 0-100]
@@ -39,8 +51,8 @@ SECTIONS:
 """
 
     try:
-        result = model.generate_content(prompt)
-        text = result.text
+        result = llm.invoke([HumanMessage(content=prompt)])
+        text = result.content
 
         confidence = 85
         summary = text

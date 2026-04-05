@@ -1,11 +1,18 @@
-"use client"
-import { useState, useEffect } from 'react'
-import { useAuth } from '@/context/AuthContext'
-import Link from 'next/link'
+"use client";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
+import Link from "next/link";
+import { secureFetch } from "@/lib/api";
 
 type UserStats = {
   total_queries: number;
-  recent_queries: Array<{id: number; query: string; response: string; confidence: number; created_at: string}>;
+  recent_queries: Array<{
+    id: number;
+    query: string;
+    response: string;
+    confidence: number;
+    created_at: string;
+  }>;
 };
 
 export default function DashboardPage() {
@@ -17,8 +24,7 @@ export default function DashboardPage() {
     if (!userId) return;
     const fetchStats = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-        const res = await fetch(`${apiUrl}/stats/${userId}`);
+        const res = await secureFetch("/stats/me");
         if (res.ok) {
           const data = await res.json();
           setStats(data);
@@ -44,36 +50,75 @@ export default function DashboardPage() {
             <p className="kicker-light">Welcome back, {userId}</p>
             <h2 className="hero-eval-title">Your Legal Research</h2>
             <div className="hero-eval-metric">
-              <span className="metric-value">{totalQueries}<span className="metric-symbol"> queries</span></span>
+              <span className="metric-value">
+                {totalQueries}
+                <span className="metric-symbol"> queries</span>
+              </span>
             </div>
           </div>
           <div className="hero-eval-progress">
             <div className="progress-bar">
-              <div className="progress-fill" style={{ width: `${Math.min(totalQueries * 2, 100)}%` }}></div>
+              <div
+                className="progress-fill"
+                style={{ width: `${Math.min(totalQueries * 2, 100)}%` }}
+              ></div>
             </div>
             <p className="progress-caption">
-              {totalQueries === 0 ? "Start your first research query to begin" : `${totalQueries} legal queries analyzed by NyayaLens AI`}
+              {totalQueries === 0
+                ? "Start your first research query to begin"
+                : `${totalQueries} legal queries analyzed by NyayaLens AI`}
             </p>
           </div>
           <div className="hero-eval-glow"></div>
         </div>
 
         <div className="insights-bento">
+          <Link href="/documents" className="insight-card docs-themed">
+            <div className="insight-header">
+              <span
+                className="material-symbols-outlined insight-icon"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
+                description
+              </span>
+              <span className="insight-badge">Documents</span>
+            </div>
+            <h3 className="insight-title">Upload PDFs</h3>
+            <p className="insight-desc">
+              Store legal documents and read them directly inside the platform.
+            </p>
+          </Link>
           <Link href="/conflicts" className="insight-card error-themed">
             <div className="insight-header">
-              <span className="material-symbols-outlined insight-icon" style={{ fontVariationSettings: "'FILL' 1" }}>warning</span>
+              <span
+                className="material-symbols-outlined insight-icon"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
+                warning
+              </span>
               <span className="insight-badge">Conflict Detection</span>
             </div>
             <h3 className="insight-title">Detect Conflicts</h3>
-            <p className="insight-desc">Compare IPC and BNS provisions to find contradictions and misalignments.</p>
+            <p className="insight-desc">
+              Compare IPC and BNS provisions to find contradictions and
+              misalignments.
+            </p>
           </Link>
           <Link href="/amendments" className="insight-card info-themed">
             <div className="insight-header">
-              <span className="material-symbols-outlined insight-icon" style={{ fontVariationSettings: "'FILL' 1" }}>gavel</span>
+              <span
+                className="material-symbols-outlined insight-icon"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
+                gavel
+              </span>
               <span className="insight-badge">Amendment Tracker</span>
             </div>
             <h3 className="insight-title">Track Amendments</h3>
-            <p className="insight-desc">Compare old and new versions of legal documents to identify changes.</p>
+            <p className="insight-desc">
+              Compare old and new versions of legal documents to identify
+              changes.
+            </p>
           </Link>
         </div>
       </section>
@@ -87,25 +132,39 @@ export default function DashboardPage() {
           <Link href="/chat" className="action-card group">
             <div className="action-card-inner">
               <div className="action-icon-box secondary-themed">
-                <span className="material-symbols-outlined icon-large">chat_bubble_outline</span>
+                <span className="material-symbols-outlined icon-large">
+                  chat_bubble_outline
+                </span>
               </div>
               <div className="action-text">
                 <h3 className="action-title">Ask Legal Query</h3>
-                <p className="action-desc">Get AI-powered answers about IPC, BNS, Supreme Court precedents, and Indian legal principles.</p>
+                <p className="action-desc">
+                  Get AI-powered answers about IPC, BNS, Supreme Court
+                  precedents, and Indian legal principles.
+                </p>
               </div>
-              <span className="material-symbols-outlined action-arrow">arrow_forward</span>
+              <span className="material-symbols-outlined action-arrow">
+                arrow_forward
+              </span>
             </div>
           </Link>
           <Link href="/conflicts" className="action-card group">
             <div className="action-card-inner">
               <div className="action-icon-box tertiary-themed">
-                <span className="material-symbols-outlined icon-large">compare_arrows</span>
+                <span className="material-symbols-outlined icon-large">
+                  compare_arrows
+                </span>
               </div>
               <div className="action-text">
                 <h3 className="action-title">Run Conflict Analysis</h3>
-                <p className="action-desc">Compare legislative provisions across IPC and BNS to detect contradictions and overlaps.</p>
+                <p className="action-desc">
+                  Compare legislative provisions across IPC and BNS to detect
+                  contradictions and overlaps.
+                </p>
               </div>
-              <span className="material-symbols-outlined action-arrow">arrow_forward</span>
+              <span className="material-symbols-outlined action-arrow">
+                arrow_forward
+              </span>
             </div>
           </Link>
         </div>
@@ -119,15 +178,28 @@ export default function DashboardPage() {
         <div className="table-responsive">
           {isLoading ? (
             <div className="empty-state">
-              <span className="material-symbols-outlined empty-icon">hourglass_top</span>
+              <span className="material-symbols-outlined empty-icon">
+                hourglass_top
+              </span>
               <p className="empty-text">Loading your research history...</p>
             </div>
           ) : recentQueries.length === 0 ? (
             <div className="empty-state">
-              <span className="material-symbols-outlined empty-icon">search</span>
+              <span className="material-symbols-outlined empty-icon">
+                search
+              </span>
               <h3 className="empty-title">No research yet</h3>
-              <p className="empty-text">Head to the AI Intelligence page to start your first legal query.</p>
-              <Link href="/chat" className="btn-primary" style={{ marginTop: '1rem' }}>Start Research</Link>
+              <p className="empty-text">
+                Head to the AI Intelligence page to start your first legal
+                query.
+              </p>
+              <Link
+                href="/chat"
+                className="btn-primary"
+                style={{ marginTop: "1rem" }}
+              >
+                Start Research
+              </Link>
             </div>
           ) : (
             <table className="research-table">
@@ -143,18 +215,26 @@ export default function DashboardPage() {
                   <tr key={q.id}>
                     <td>
                       <div className="file-name-cell">
-                        <span className="material-symbols-outlined icon-primary">psychology</span>
+                        <span className="material-symbols-outlined icon-primary">
+                          psychology
+                        </span>
                         <span className="file-name">{q.query}</span>
                       </div>
                     </td>
                     <td>
                       <div className="clauses-cell">
-                        <div className={`dot-indicator ${q.confidence > 80 ? 'dot-tertiary' : 'dot-error'}`}></div>
+                        <div
+                          className={`dot-indicator ${q.confidence > 80 ? "dot-tertiary" : "dot-error"}`}
+                        ></div>
                         <span className="clauses-text">{q.confidence}%</span>
                       </div>
                     </td>
                     <td>
-                      <span className="time-text">{q.created_at ? new Date(q.created_at).toLocaleDateString() : "—"}</span>
+                      <span className="time-text">
+                        {q.created_at
+                          ? new Date(q.created_at).toLocaleDateString()
+                          : "—"}
+                      </span>
                     </td>
                   </tr>
                 ))}

@@ -1,0 +1,146 @@
+[
+  {
+    "section": "Section 2",
+    "title": "Definitions",
+    "description": "Defines key procedural terms used in the Bharatiya Nagarik Suraksha Sanhita, including cognizable offence, complaint, investigation, inquiry and police report.",
+    "chapter": "Chapter I - Preliminary"
+  },
+  {
+    "section": "Section 35",
+    "title": "When police may arrest without warrant",
+    "description": "Specifies circumstances in which a police officer may arrest a person without an order from a Magistrate and without a warrant.",
+    "chapter": "Chapter V - Arrest of Persons"
+  },
+  {
+    "section": "Section 36",
+    "title": "Procedure of arrest and duties of officer",
+    "description": "Lays down safeguards and procedure while making arrest, including identification and informing grounds of arrest.",
+    "chapter": "Chapter V - Arrest of Persons"
+  },
+  {
+    "section": "Section 37",
+    "title": "Designated police officer and recording information",
+    "description": "Requires transparency and recording obligations in relation to arrests and detention management.",
+    "chapter": "Chapter V - Arrest of Persons"
+  },
+  {
+    "section": "Section 41",
+    "title": "Right of arrested person to meet advocate",
+    "description": "Provides that an arrested person is entitled to meet an advocate of his choice during interrogation, though not throughout interrogation.",
+    "chapter": "Chapter V - Arrest of Persons"
+  },
+  {
+    "section": "Section 47",
+    "title": "Search of place entered by person sought to be arrested",
+    "description": "Authorizes police to enter and search premises where a person to be arrested is believed to be present.",
+    "chapter": "Chapter V - Arrest of Persons"
+  },
+  {
+    "section": "Section 51",
+    "title": "Examination of arrested person by medical practitioner",
+    "description": "Permits medical examination of arrested person in specified circumstances for evidence collection and safety.",
+    "chapter": "Chapter V - Arrest of Persons"
+  },
+  {
+    "section": "Section 57",
+    "title": "Person arrested not to be detained beyond twenty-four hours",
+    "description": "No police officer shall detain in custody a person arrested without warrant for more than twenty-four hours without Magistrate authorization.",
+    "chapter": "Chapter V - Arrest of Persons"
+  },
+  {
+    "section": "Section 58",
+    "title": "Police to report apprehensions",
+    "description": "Requires reporting of arrests without warrant to District Magistrate or Sub-divisional Magistrate.",
+    "chapter": "Chapter V - Arrest of Persons"
+  },
+  {
+    "section": "Section 105",
+    "title": "Search and seizure",
+    "description": "Provides procedural framework for search, seizure, and recording, including grounds, witnesses and inventory.",
+    "chapter": "Chapter VIII - Processes to Compel Production"
+  },
+  {
+    "section": "Section 107",
+    "title": "Recording of search and seizure through electronic means",
+    "description": "Encourages or mandates use of audio-video or electronic recording for procedural transparency.",
+    "chapter": "Chapter VIII - Processes to Compel Production"
+  },
+  {
+    "section": "Section 173",
+    "title": "Information in cognizable cases",
+    "description": "Mandates registration of information relating to commission of cognizable offences and procedural handling by police station.",
+    "chapter": "Chapter XIII - Information to Police"
+  },
+  {
+    "section": "Section 176",
+    "title": "Procedure for investigation",
+    "description": "Sets rules for investigation, including collection of evidence, statements, and case diary standards.",
+    "chapter": "Chapter XIII - Information to Police"
+  },
+  {
+    "section": "Section 180",
+    "title": "Statements to police",
+    "description": "Provides framework for examination of witnesses by police during investigation and evidentiary limitations.",
+    "chapter": "Chapter XIII - Information to Police"
+  },
+  {
+    "section": "Section 193",
+    "title": "Completion of investigation and police report",
+    "description": "Requires filing of police report upon completion of investigation with details of parties, facts and collected evidence.",
+    "chapter": "Chapter XIII - Information to Police"
+  },
+  {
+    "section": "Section 210",
+    "title": "Supply to accused of police report and other documents",
+    "description": "Accused is entitled to copies of police report, statements and relied-upon documents before trial.",
+    "chapter": "Chapter XV - Proceedings Before Magistrates"
+  },
+  {
+    "section": "Section 223",
+    "title": "Discharge",
+    "description": "Court may discharge accused if charge is groundless after considering record and submissions.",
+    "chapter": "Chapter XVII - Trial Before Court of Session"
+  },
+  {
+    "section": "Section 228",
+    "title": "Framing of charge",
+    "description": "Court frames charge when there is ground for presuming that the accused committed an offence triable by the court.",
+    "chapter": "Chapter XVII - Trial Before Court of Session"
+  },
+  {
+    "section": "Section 249",
+    "title": "Procedure where accused is not convicted",
+    "description": "Specifies consequences and procedural outcomes when prosecution fails to prove case.",
+    "chapter": "Chapter XVIII - Trial of Warrant Cases"
+  },
+  {
+    "section": "Section 356",
+    "title": "Judgment",
+    "description": "Prescribes requirements for pronouncement and content of criminal judgment.",
+    "chapter": "Chapter XXVII - Judgment"
+  },
+  {
+    "section": "Section 389",
+    "title": "Appeal from conviction",
+    "description": "Details right and procedure of appeal against conviction and sentence.",
+    "chapter": "Chapter XXIX - Appeals"
+  },
+  {
+    "section": "Section 432",
+    "title": "Power to suspend or remit sentences",
+    "description": "Appropriate Government may suspend execution of sentence or remit punishment under prescribed conditions.",
+    "chapter": "Chapter XXXIV - Miscellaneous"
+  },
+  {
+    "section": "Section 479",
+    "title": "Maximum period for undertrial detention",
+    "description": "Addresses release of undertrial prisoners after specified period of detention relative to maximum sentence.",
+    "chapter": "Chapter XXXVI - Special Procedural Safeguards"
+  },
+  {
+    "section": "Section 531",
+    "title": "Trial and proceedings held in electronic mode",
+    "description": "Enables use of electronic and digital means in criminal proceedings, including summons, service, and hearings where permitted.",
+    "chapter": "Chapter XL - Digital Procedure"
+  }
+]

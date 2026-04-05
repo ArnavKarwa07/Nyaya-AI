@@ -1,6 +1,12 @@
 fastapi
 uvicorn[standard]
 sqlalchemy
-google-generativeai
+langchain-core
+langchain-groq
+langgraph
 python-dotenv
 bcrypt
+pypdf
+python-jose[cryptography]
+slowapi
+python-multipart
