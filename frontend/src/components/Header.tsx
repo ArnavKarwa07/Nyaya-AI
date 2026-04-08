@@ -2,9 +2,24 @@
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const { logout } = useAuth();
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+  };
 
   return (
     <header className="global-header">
@@ -21,6 +36,11 @@ export default function Header() {
             Workspaces
           </Link>
         </nav>
+        <button className="btn-icon-top" onClick={toggleTheme} title="Toggle Theme">
+          <span className="material-symbols-outlined">
+            {theme === "light" ? "dark_mode" : "light_mode"}
+          </span>
+        </button>
         <button className="btn-icon-top">
           <span className="material-symbols-outlined">notifications</span>
         </button>

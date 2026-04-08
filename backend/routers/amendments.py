@@ -1,19 +1,26 @@
+from typing import Optional
+
 from fastapi import APIRouter, Depends, Request
 from pydantic import BaseModel, Field
+from sqlalchemy.orm import Session
 from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage
 import os
 
+from backend.database import get_db
 from backend.rate_limit import limiter
 from backend.security import get_current_user
+from backend.routers.documents import extract_document_text
 
 router = APIRouter(prefix="/amendments", tags=["Amendments"])
 
 
 class AmendmentCompareRequest(BaseModel):
-    old_text: str = Field(min_length=20, max_length=25000)
-    new_text: str = Field(min_length=20, max_length=25000)
+    old_text: str = Field(default="", max_length=25000)
+    new_text: str = Field(default="", max_length=25000)
     document_title: str = Field(default="Legal Document", min_length=3, max_length=200)
+    old_document_id: Optional[int] = None
+    new_document_id: Optional[int] = None
 
 
 class AmendmentChange(BaseModel):
@@ -39,9 +46,30 @@ class AmendmentCompareResponse(BaseModel):
 def compare_amendments(
     request: Request,
     payload: AmendmentCompareRequest,
+    db: Session = Depends(get_db),
     current_user: str = Depends(get_current_user),
 ):
-    _ = (request, current_user)
+    _ = request
+
+    # Resolve document text when document IDs are provided
+    old_text = payload.old_text
+    new_text = payload.new_text
+
+    if payload.old_document_id is not None:
+        old_text = extract_document_text(db, payload.old_document_id, current_user)
+    if payload.new_document_id is not None:
+        new_text = extract_document_text(db, payload.new_document_id, current_user)
+
+    if len(old_text.strip()) < 20 or len(new_text.strip()) < 20:
+        return AmendmentCompareResponse(
+            changes=[],
+            total_additions=0,
+            total_deletions=0,
+            risk_summary="Both old and new text must have at least 20 characters.",
+            ai_impact_analysis="Please provide longer text or select documents with more content.",
+            confidence=0,
+        )
+
     llm = ChatGroq(
         model=os.getenv("GROQ_MODEL", "mixtral-8x7b-32768"),
         api_key=os.getenv("GROQ_API_KEY", ""),
@@ -53,10 +81,10 @@ Compare these two versions of a legal document and identify all amendments, chan
 DOCUMENT: {payload.document_title}
 
 OLD VERSION:
-{payload.old_text}
+{old_text[:25000]}
 
 NEW VERSION:
-{payload.new_text}
+{new_text[:25000]}
 
 Format your response EXACTLY as follows:
 CONFIDENCE: [Score 0-100]
@@ -155,8 +183,8 @@ ANALYSIS:
                 {
                     "clause": "General",
                     "change_type": "Modification",
-                    "old_content": payload.old_text[:100],
-                    "new_content": payload.new_text[:100],
+                    "old_content": old_text[:100],
+                    "new_content": new_text[:100],
                     "risk_level": "Medium Risk",
                     "impact_analysis": analysis[:200],
                 }

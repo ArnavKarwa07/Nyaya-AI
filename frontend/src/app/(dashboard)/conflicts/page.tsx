@@ -1,6 +1,9 @@
 "use client";
 import { useState } from "react";
 import { secureFetch } from "@/lib/api";
+import DocumentPicker from "@/components/DocumentPicker";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 
 export default function ConflictsPage() {
   const [sourceText, setSourceText] = useState("");
@@ -69,6 +72,49 @@ export default function ConflictsPage() {
     }
   };
 
+  const handleExportPdf = () => {
+    if (!result) return;
+    const doc = new jsPDF();
+    
+    // Header
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.text("Conflict Analysis Report", 14, 22);
+    
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 30);
+    
+    // AI Analysis
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("AI Expert Analysis", 14, 45);
+    
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    const aiAnalysisText = result.ai_analysis || "No analysis generated.";
+    const splitAnalysis = doc.splitTextToSize(aiAnalysisText, 180);
+    doc.text(splitAnalysis, 14, 55);
+    
+    // Conflicts Table
+    const tableData = result.conflicts.map(c => [
+      c.severity || "Unknown",
+      c.title || "Untitled",
+      c.description || "No description"
+    ]);
+    
+    autoTable(doc, {
+      startY: 55 + (splitAnalysis.length * 5) + 10,
+      head: [["Severity", "Conflict", "Description"]],
+      body: tableData,
+      theme: "striped",
+      styles: { fontSize: 9 },
+      headStyles: { fillColor: [45, 21, 0] }
+    });
+    
+    doc.save("conflict-report.pdf");
+  };
+
   return (
     <div className="conflicts-container">
       <div className="conflicts-page-header">
@@ -102,7 +148,7 @@ export default function ConflictsPage() {
             {result ? `${result.overall_confidence}%` : "—"}
           </p>
         </div>
-        <div className="conflicts-stat-card">
+        <div className="conflicts-stat-card" style={{ display: "flex", gap: "0.5rem" }}>
           <button
             onClick={handleAnalyze}
             disabled={isLoading}
@@ -113,6 +159,17 @@ export default function ConflictsPage() {
             </span>
             {isLoading ? "Analyzing..." : "Run Analysis"}
           </button>
+          {result && (
+            <button
+              onClick={handleExportPdf}
+              className="btn-summarize"
+              style={{ padding: "0.5rem 1rem", fontSize: "0.875rem" }}
+              title="Export Report to PDF"
+            >
+              <span className="material-symbols-outlined icon-small">picture_as_pdf</span>
+              Export PDF
+            </button>
+          )}
         </div>
       </div>
 
@@ -123,11 +180,17 @@ export default function ConflictsPage() {
             <span className="material-symbols-outlined">description</span>
             <span className="conflicts-input-label">Source Act / Clause</span>
           </div>
+          <div style={{ padding: "0.75rem 1rem 0" }}>
+            <DocumentPicker
+              label="Load from uploaded document..."
+              onTextExtracted={(text) => setSourceText(text)}
+            />
+          </div>
           <textarea
             className="conflicts-textarea"
             value={sourceText}
             onChange={(e) => setSourceText(e.target.value)}
-            placeholder="Paste the source legal text here..."
+            placeholder="Paste the source legal text here or select a document above..."
             rows={6}
           />
         </div>
@@ -136,11 +199,17 @@ export default function ConflictsPage() {
             <span className="material-symbols-outlined">article</span>
             <span className="conflicts-input-label">Target Act / Clause</span>
           </div>
+          <div style={{ padding: "0.75rem 1rem 0" }}>
+            <DocumentPicker
+              label="Load from uploaded document..."
+              onTextExtracted={(text) => setTargetText(text)}
+            />
+          </div>
           <textarea
             className="conflicts-textarea"
             value={targetText}
             onChange={(e) => setTargetText(e.target.value)}
-            placeholder="Paste the target legal text here..."
+            placeholder="Paste the target legal text here or select a document above..."
             rows={6}
           />
         </div>
@@ -199,7 +268,7 @@ export default function ConflictsPage() {
               <div>
                 <h3 className="analysis-title">AI Expert Analysis</h3>
                 <p className="analysis-subtitle">
-                  Comparative analysis powered by Gemini
+                  Comparative analysis powered by NyayaLens AI
                 </p>
               </div>
             </div>

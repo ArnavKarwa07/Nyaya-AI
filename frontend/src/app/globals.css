@@ -5,6 +5,8 @@
 @import "./conflicts.css";
 @import "./amendments.css";
 @import "./documents.css";
+@import "./document-picker.css";
+@import "./summarize.css";
 
 :root {
   --color-primary-fixed-dim: #ffb77a;
@@ -73,6 +75,56 @@
   --radius-full: 9999px;
 }
 
+[data-theme="dark"] {
+  --color-primary-fixed-dim: #2d1500;
+  --color-surface-dim: #1a1c1d;
+  --color-on-secondary: #000000;
+  --color-surface-variant: #252627;
+  --color-on-surface: #e2e2e4;
+  --color-on-surface-variant: #c6c5d4;
+  --color-tertiary-fixed: #00200c;
+  --color-on-secondary-fixed: #bdc2ff;
+  --color-primary-container: #8f4e00;
+  --color-surface-container-lowest: #000000;
+  --color-primary-fixed: #2d1500;
+  --color-primary: #ffb77a;
+  --color-secondary: #bdc2ff;
+  --color-secondary-fixed-dim: #4c56af;
+  --color-surface-tint: #ffb77a;
+  --color-inverse-primary: #8f4e00;
+  --color-outline: #8c8c99;
+  --color-secondary-fixed: #27308a;
+  --color-on-primary-fixed-variant: #ffb77a;
+  --color-on-secondary-fixed-variant: #bdc2ff;
+  --color-inverse-on-surface: #1a1c1d;
+  --color-outline-variant: #454652;
+  --color-surface-bright: #38393a;
+  --color-on-tertiary-fixed: #96f7af;
+  --color-on-background: #e2e2e4;
+  --color-error: #ffb4ab;
+  --color-on-tertiary: #000000;
+  --color-on-error-container: #ffdad6;
+  --color-on-primary-container: #ffdcc2;
+  --color-surface-container-high: #2f3132;
+  --color-tertiary: #7ada95;
+  --color-on-primary-fixed: #ffdcc2;
+  --color-on-tertiary-fixed-variant: #7ada95;
+  --color-secondary-container: #27308a;
+  --color-tertiary-container: #005228;
+  --color-background: #1a1c1d;
+  --color-surface: #1a1c1d;
+  --color-on-tertiary-container: #96f7af;
+  --color-surface-container-low: #1d1f20;
+  --color-on-error: #690005;
+  --color-surface-container-highest: #38393a;
+  --color-tertiary-fixed-dim: #003819;
+  --color-on-secondary-container: #e0e0ff;
+  --color-surface-container: #252627;
+  --color-on-primary: #4e2600;
+  --color-error-container: #93000a;
+  --color-inverse-surface: #e2e2e4;
+}
+
 /* Base Restyle */
 * {
   margin: 0;
@@ -121,6 +173,19 @@ textarea {
 
 /* Material Symbols */
 .material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
   font-variation-settings:
     "FILL" 0,
     "wght" 400,

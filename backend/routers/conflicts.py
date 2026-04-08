@@ -1,18 +1,25 @@
+from typing import Optional
+
 from fastapi import APIRouter, Depends, Request
 from pydantic import BaseModel, Field
+from sqlalchemy.orm import Session
 from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage
 import os
 
+from backend.database import get_db
 from backend.rate_limit import limiter
 from backend.security import get_current_user
+from backend.routers.documents import extract_document_text
 
 router = APIRouter(prefix="/conflicts", tags=["Conflicts"])
 
 
 class ConflictRequest(BaseModel):
-    source_text: str = Field(min_length=20, max_length=12000)
-    target_text: str = Field(min_length=20, max_length=12000)
+    source_text: str = Field(default="", max_length=12000)
+    target_text: str = Field(default="", max_length=12000)
+    source_document_id: Optional[int] = None
+    target_document_id: Optional[int] = None
 
 
 class ConflictItem(BaseModel):
@@ -35,9 +42,34 @@ class ConflictResponse(BaseModel):
 def detect_conflicts(
     request: Request,
     payload: ConflictRequest,
+    db: Session = Depends(get_db),
     current_user: str = Depends(get_current_user),
 ):
-    _ = (request, current_user)
+    _ = request
+
+    # Resolve document text when document IDs are provided
+    source_text = payload.source_text
+    target_text = payload.target_text
+
+    if payload.source_document_id is not None:
+        source_text = extract_document_text(db, payload.source_document_id, current_user)
+    if payload.target_document_id is not None:
+        target_text = extract_document_text(db, payload.target_document_id, current_user)
+
+    if len(source_text.strip()) < 20 or len(target_text.strip()) < 20:
+        return ConflictResponse(
+            conflicts=[{
+                "severity": "Error",
+                "match": 0,
+                "title": "Insufficient Text",
+                "description": "Both source and target must have at least 20 characters of text.",
+                "source": "",
+                "target": "",
+            }],
+            overall_confidence=0,
+            ai_analysis="Please provide longer text or select documents with more content.",
+        )
+
     llm = ChatGroq(
         model=os.getenv("GROQ_MODEL", "mixtral-8x7b-32768"),
         api_key=os.getenv("GROQ_API_KEY", ""),
@@ -47,10 +79,10 @@ def detect_conflicts(
 Compare these two legal texts and identify contradictions, conflicts, or misalignments.
 
 SOURCE TEXT:
-{payload.source_text}
+{source_text[:12000]}
 
 TARGET TEXT:
-{payload.target_text}
+{target_text[:12000]}
 
 Analyze for:
 1. Terminology shifts without scope parity
@@ -102,8 +134,8 @@ ANALYSIS:
                         "match": 80,
                         "title": "Detected Conflict",
                         "description": "",
-                        "source": request.source_text[:50],
-                        "target": request.target_text[:50],
+                        "source": source_text[:50],
+                        "target": target_text[:50],
                     }
                     for line in lines:
                         line = line.strip().lstrip("- ")
@@ -135,8 +167,8 @@ ANALYSIS:
                     "match": 0,
                     "title": "Analysis Complete",
                     "description": analysis[:200],
-                    "source": payload.source_text[:50],
-                    "target": payload.target_text[:50],
+                    "source": source_text[:50],
+                    "target": target_text[:50],
                 }
             ]
 
@@ -153,8 +185,8 @@ ANALYSIS:
                     "match": 0,
                     "title": "Analysis Failed",
                     "description": str(e),
-                    "source": payload.source_text[:50],
-                    "target": payload.target_text[:50],
+                    "source": source_text[:50],
+                    "target": target_text[:50],
                 }
             ],
             overall_confidence=0,

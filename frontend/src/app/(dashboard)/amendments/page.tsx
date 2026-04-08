@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
 import { secureFetch } from "@/lib/api";
+import DocumentPicker from "@/components/DocumentPicker";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
+import { diffWordsWithSpace } from "diff";
 
 export default function AmendmentTrackerPage() {
   const [oldText, setOldText] = useState("");
@@ -62,6 +66,54 @@ export default function AmendmentTrackerPage() {
     }
   };
 
+  const handleExportPdf = () => {
+    if (!result) return;
+    const doc = new jsPDF();
+    
+    // Header
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.text("Amendment Tracking Report", 14, 22);
+    
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 30);
+    doc.text(`Document Title: ${docTitle || 'N/A'}`, 14, 35);
+    
+    // Summary Text
+    doc.text(`Total Additions: ${result.total_additions}   |   Total Deletions: ${result.total_deletions}`, 14, 45);
+    
+    // AI Analysis
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("AI Impact Analysis", 14, 55);
+    
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    const aiImpactText = result.ai_impact_analysis || "No analysis generated.";
+    const splitAnalysis = doc.splitTextToSize(aiImpactText, 180);
+    doc.text(splitAnalysis, 14, 65);
+    
+    // Changes Table
+    const tableData = result.changes.map(c => [
+      c.clause || "-",
+      c.change_type || "-",
+      c.risk_level || "-",
+      c.impact_analysis || "-"
+    ]);
+    
+    autoTable(doc, {
+      startY: 65 + (splitAnalysis.length * 5) + 10,
+      head: [["Clause", "Type", "Risk", "Impact"]],
+      body: tableData,
+      theme: "striped",
+      styles: { fontSize: 8 },
+      headStyles: { fillColor: [45, 21, 0] }
+    });
+    
+    doc.save("amendments-report.pdf");
+  };
+
   return (
     <div className="amendments-container">
       {/* Header */}
@@ -90,11 +142,20 @@ export default function AmendmentTrackerPage() {
               Baseline Version (Old)
             </span>
           </div>
+          <div style={{ padding: "0.75rem 1rem 0" }}>
+            <DocumentPicker
+              label="Load from uploaded document..."
+              onTextExtracted={(text, title) => {
+                setOldText(text);
+                if (!docTitle.trim()) setDocTitle(title);
+              }}
+            />
+          </div>
           <textarea
             className="amendments-textarea"
             value={oldText}
             onChange={(e) => setOldText(e.target.value)}
-            placeholder="Paste the old version text here..."
+            placeholder="Paste the old version text here or select a document above..."
             rows={6}
           />
         </div>
@@ -104,11 +165,20 @@ export default function AmendmentTrackerPage() {
               Current Version (New)
             </span>
           </div>
+          <div style={{ padding: "0.75rem 1rem 0" }}>
+            <DocumentPicker
+              label="Load from uploaded document..."
+              onTextExtracted={(text, title) => {
+                setNewText(text);
+                if (!docTitle.trim()) setDocTitle(title);
+              }}
+            />
+          </div>
           <textarea
             className="amendments-textarea"
             value={newText}
             onChange={(e) => setNewText(e.target.value)}
-            placeholder="Paste the new version text here..."
+            placeholder="Paste the new version text here or select a document above..."
             rows={6}
           />
         </div>
@@ -135,6 +205,17 @@ export default function AmendmentTrackerPage() {
           </span>
           {isLoading ? "Comparing..." : "Compare Versions"}
         </button>
+        {result && (
+          <button
+            onClick={handleExportPdf}
+            className="btn-summarize"
+            style={{ padding: "0.5rem 1rem", fontSize: "0.875rem", borderRadius: "var(--radius-md)", marginLeft: "0.5rem" }}
+            title="Export Report to PDF"
+          >
+            <span className="material-symbols-outlined icon-small">picture_as_pdf</span>
+            Export PDF
+          </button>
+        )}
       </div>
 
       {/* Results */}
@@ -189,23 +270,21 @@ export default function AmendmentTrackerPage() {
                   </div>
 
                   {/* Diff display */}
-                  <div className="change-diff-grid">
-                    {change.old_content && change.old_content !== "N/A" && (
-                      <div className="change-diff-old">
-                        <span className="diff-label">Removed</span>
-                        <p className="diff-text diff-text-old">
-                          {change.old_content}
-                        </p>
-                      </div>
-                    )}
-                    {change.new_content && change.new_content !== "N/A" && (
-                      <div className="change-diff-new">
-                        <span className="diff-label">Added</span>
-                        <p className="diff-text diff-text-new">
-                          {change.new_content}
-                        </p>
-                      </div>
-                    )}
+                  <div className="change-diff-unified">
+                    <span className="diff-label">Visual Diff</span>
+                    <p className="diff-text unified-diff">
+                      {diffWordsWithSpace(
+                        change.old_content !== "N/A" ? change.old_content : "",
+                        change.new_content !== "N/A" ? change.new_content : ""
+                      ).map((part, i) => (
+                        <span
+                          key={i}
+                          className={part.added ? "diff-added-word" : part.removed ? "diff-removed-word" : "diff-unchanged-word"}
+                        >
+                          {part.value}
+                        </span>
+                      ))}
+                    </p>
                   </div>
 
                   {change.impact_analysis && (

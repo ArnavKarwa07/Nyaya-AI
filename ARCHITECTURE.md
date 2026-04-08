@@ -2,20 +2,19 @@
 
 ## Overview
 
-NyayaLens AI combines RAG, Knowledge Graphs, and Self-Learning Pipelines.
+NyayaLens AI is a RAG-based legal document analysis platform with real-time chat and conflict detection.
 
 ---
 
 ## High-Level Flow
 
 1. Upload Document
-2. Parse Structure
-3. Generate Embeddings
-4. Build Knowledge Graph
-5. Store in Vector DB
-6. Query & Reason
-7. Capture Feedback
-8. Improve Retrieval
+2. Parse and Extract Text
+3. Store Document
+4. Query via RAG
+5. Retrieve Relevant Sections
+6. Generate Response via LLM
+7. Log Chat History
 
 ---
 
@@ -30,13 +29,11 @@ Next.js App Router:
 ---
 
 ## Backend Modules
-/ingestion
-/nlp
-/rag
-/reasoning
-/feedback
-/memory
-/graph
+/routers (API endpoints for chat, conflicts, amendments, summarize, documents, auth, stats)
+/rag_engine (Retrieval logic)
+/rag_graph (Chat flow orchestration)
+/database (SQLAlchemy models)
+/security (Authentication)
 
 
 ---
@@ -52,15 +49,10 @@ Vector search retrieves relevant chunks.
 ### Reasoning
 Groq LLM generates explainable responses.
 
-### Learning Loop
-Feedback updates ranking and prompts.
-
----
-
-## Self-Learning Cycle
-
+### Current Chat Flow
 User Query
-→ AI Response
-→ Feedback Captured
-→ Ranking Adjusted
-→ Better Future Retrieval
+→ Document Retrieval
+→ Context Preparation
+→ LLM Generation
+→ Response & Citation
+→ History Logged

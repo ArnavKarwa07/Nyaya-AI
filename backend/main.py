@@ -62,3 +62,7 @@ def startup_seed_data() -> None:
 @app.get("/")
 def read_root():
     return {"message": "Welcome to NyayaLens backend API!"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="[IP_ADDRESS]", port=8000)

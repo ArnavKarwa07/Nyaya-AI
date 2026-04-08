@@ -32,20 +32,19 @@ Show reasoning sources.
 
 ---
 
-## Self-Learning Features
+## Roadmap Features (Not Yet Implemented)
 
 ### Feedback Learning
-Users can rate answers.
-Feedback updates ranking signals.
+Future: Enable users to rate answers, with feedback updating retrieval rankings.
 
 ### Adaptive Retrieval
-Embedding weights adjusted using usage data.
+Future: Adjust embedding weights and ranking based on usage patterns.
 
 ### Reasoning Memory
-Store successful reasoning chains.
+Future: Store and reuse successful reasoning chains.
 
 ### Query Pattern Learning
-System learns common legal query structures.
+Future: Learn from common legal query structures.
 
 ---
 

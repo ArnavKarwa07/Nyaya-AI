@@ -1,7 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { secureFetch } from "@/lib/api";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
+type DocumentItem = {
+  id: number;
+  title: string;
+  original_filename: string;
+};
 
 type Message = {
   role: string;
@@ -10,11 +18,92 @@ type Message = {
   citations?: string[];
 };
 
+type ChatHistoryItem = {
+  id: number;
+  query: string;
+  response: string;
+  confidence: number;
+  created_at: string;
+  citations?: string[];
+};
+
 export default function ChatPage() {
   const { userId } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [history, setHistory] = useState<ChatHistoryItem[]>([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  // Document attachment state
+  const [documents, setDocuments] = useState<DocumentItem[]>([]);
+  const [attachedDocs, setAttachedDocs] = useState<DocumentItem[]>([]);
+  const [isLoadingDocs, setIsLoadingDocs] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const fetchHistory = async () => {
+    try {
+      const res = await secureFetch("/chat/history");
+      if (res.ok) {
+        const data = await res.json();
+        setHistory(data.history || []);
+      }
+    } catch {
+      // ignore
+    }
+  };
+
+  // Load documents list and history on mount
+  useEffect(() => {
+    const loadDocs = async () => {
+      setIsLoadingDocs(true);
+      try {
+        const res = await secureFetch("/documents/");
+        if (res.ok) {
+          const data = await res.json();
+          setDocuments(Array.isArray(data.documents) ? data.documents : []);
+        }
+      } catch {
+        // silently fail
+      } finally {
+        setIsLoadingDocs(false);
+      }
+    };
+    loadDocs();
+    if (userId) {
+      fetchHistory();
+    }
+  }, [userId]);
+
+  const handleLoadHistory = (item: ChatHistoryItem) => {
+    setMessages([
+      { role: "user", content: item.query },
+      {
+        role: "ai",
+        content: item.response,
+        confidence: item.confidence,
+        citations: item.citations,
+      },
+    ]);
+  };
+
+  // Auto-scroll to bottom on new messages
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isLoading]);
+
+  const handleAttachDoc = (value: string) => {
+    if (!value) return;
+    const docId = parseInt(value, 10);
+    const doc = documents.find((d) => d.id === docId);
+    if (doc && !attachedDocs.find((d) => d.id === docId)) {
+      setAttachedDocs((prev) => [...prev, doc]);
+    }
+  };
+
+  const handleRemoveDoc = (docId: number) => {
+    setAttachedDocs((prev) => prev.filter((d) => d.id !== docId));
+  };
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -25,9 +114,14 @@ export default function ChatPage() {
     setIsLoading(true);
 
     try {
+      const body: Record<string, unknown> = { query: input };
+      if (attachedDocs.length > 0) {
+        body.document_ids = attachedDocs.map((d) => d.id);
+      }
+
       const res = await secureFetch("/chat/", {
         method: "POST",
-        body: JSON.stringify({ query: input }),
+        body: JSON.stringify(body),
       });
       if (res.status === 401) {
         setMessages((prev) => [
@@ -50,6 +144,7 @@ export default function ChatPage() {
           citations: data.citations || [],
         },
       ]);
+      fetchHistory(); // Refresh history
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -59,6 +154,7 @@ export default function ChatPage() {
           confidence: 0,
         },
       ]);
+
     } finally {
       setIsLoading(false);
     }
@@ -66,7 +162,57 @@ export default function ChatPage() {
 
   return (
     <div className="chat-layout">
+      {/* Sidebar for History */}
+      {isSidebarOpen && (
+        <aside className="chat-history-sidebar">
+          <div className="history-header">
+            <h3>Recent Chats</h3>
+            <button
+              onClick={() => {
+                setMessages([]);
+                setInput("");
+              }}
+              className="btn-new-chat"
+              title="New Chat"
+            >
+              <span className="material-symbols-outlined">add</span>
+            </button>
+          </div>
+          <div className="history-list">
+            {history.length === 0 ? (
+              <p className="no-history">No past conversations.</p>
+            ) : (
+              history.map((h) => (
+                <button
+                  key={h.id}
+                  className="history-item"
+                  onClick={() => handleLoadHistory(h)}
+                >
+                  <span className="material-symbols-outlined icon-small">chat_bubble</span>
+                  <div className="history-text">
+                    <span className="history-query">{h.query}</span>
+                    <span className="history-date">
+                      {new Date(h.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                </button>
+              ))
+            )}
+          </div>
+        </aside>
+      )}
+
       <section className="chat-main-area">
+        <div className="chat-top-bar" style={{ display: 'flex', alignItems: 'center', padding: '0.5rem 1rem', borderBottom: '1px solid rgba(198, 197, 212, 0.2)' }}>
+          <button 
+            className="history-toggle-btn"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            style={{ display: 'flex', alignItems: 'center', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-outline)' }}
+            title={isSidebarOpen ? "Hide History" : "Show History"}
+          >
+            <span className="material-symbols-outlined">{isSidebarOpen ? "view_sidebar" : "menu"}</span>
+          </button>
+        </div>
         <div className="chat-messages-container">
           {/* Welcome screen when no messages */}
           {messages.length === 0 && !isLoading && (
@@ -163,27 +309,17 @@ export default function ChatPage() {
                         </div>
                       )}
                     </div>
-                    <div className="ai-body-text">{msg.content}</div>
+                    <div className="ai-body-text markdown-content">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {msg.content}
+                      </ReactMarkdown>
+                    </div>
                     {msg.citations && msg.citations.length > 0 && (
-                      <div
-                        style={{
-                          marginTop: "0.75rem",
-                          display: "flex",
-                          flexWrap: "wrap",
-                          gap: "0.5rem",
-                        }}
-                      >
-                        {msg.citations.map((citation, idx) => (
+                      <div className="ai-citations-row">
+                        {msg.citations.map((citation, cidx) => (
                           <span
-                            key={`${citation}-${idx}`}
-                            style={{
-                              fontSize: "0.75rem",
-                              border: "1px solid var(--color-outline)",
-                              borderRadius: "999px",
-                              padding: "0.2rem 0.6rem",
-                              background: "var(--color-surface-2)",
-                              color: "var(--color-secondary)",
-                            }}
+                            key={`${citation}-${cidx}`}
+                            className="ai-citation-chip"
                           >
                             {citation}
                           </span>
@@ -208,10 +344,59 @@ export default function ChatPage() {
               </div>
             </div>
           )}
+          <div ref={messagesEndRef} />
         </div>
 
         <div className="chat-input-area">
           <div className="chat-input-container">
+            {/* Document attachment bar */}
+            {documents.length > 0 && (
+              <div className="chat-doc-attach-bar">
+                <span className="chat-doc-attach-label">
+                  <span className="material-symbols-outlined">attach_file</span>
+                  Docs
+                </span>
+                <select
+                  className="chat-doc-select"
+                  value=""
+                  onChange={(e) => handleAttachDoc(e.target.value)}
+                  disabled={isLoadingDocs}
+                >
+                  <option value="">
+                    {isLoadingDocs
+                      ? "Loading..."
+                      : "Attach a document for context..."}
+                  </option>
+                  {documents
+                    .filter((d) => !attachedDocs.find((a) => a.id === d.id))
+                    .map((doc) => (
+                      <option key={doc.id} value={doc.id.toString()}>
+                        {doc.title} ({doc.original_filename})
+                      </option>
+                    ))}
+                </select>
+                {attachedDocs.length > 0 && (
+                  <div className="chat-doc-chips">
+                    {attachedDocs.map((doc) => (
+                      <span key={doc.id} className="chat-doc-chip">
+                        <span className="material-symbols-outlined icon-tiny">
+                          description
+                        </span>
+                        {doc.title}
+                        <button
+                          className="chat-doc-chip-remove"
+                          onClick={() => handleRemoveDoc(doc.id)}
+                          aria-label={`Remove ${doc.title}`}
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
             <textarea
               className="chat-textarea"
               placeholder="Type your legal query... (e.g., Explain the doctrine of 'Pith and Substance')"

@@ -11,6 +11,7 @@ from backend.rag_engine import build_rag_context
 class RagState(TypedDict, total=False):
     user_id: str
     query: str
+    doc_context: str
     rag_context: str
     citations: list[str]
     prompt: str
@@ -27,6 +28,13 @@ def _retrieve_node(state: RagState, db: Session) -> RagState:
 
 
 def _prompt_node(state: RagState) -> RagState:
+    doc_section = ""
+    if state.get("doc_context"):
+        doc_section = f"""
+USER-ATTACHED DOCUMENTS:
+{state['doc_context']}
+"""
+
     prompt = f"""
 You are NyayaLens Digital Jurist, a retrieval-grounded legal intelligence assistant for Indian law.
 Follow these strict rules:
@@ -35,12 +43,13 @@ Follow these strict rules:
 3. If context is insufficient, clearly say what is missing and provide a cautious response.
 4. Prefer structured output: issue, applicable law, analysis, conclusion.
 5. Do not fabricate case names or section text.
+6. Format your response using markdown for readability: use **bold** for key terms, headings (##) for sections, bullet points for lists, and > blockquotes for legal text.
 
 {state['rag_context']}
-
+{doc_section}
 User Query: {state['query']}
 
-Provide your response with specific legal references.
+Provide your response with specific legal references. Use markdown formatting.
 """
     return {"prompt": prompt}
 
@@ -50,11 +59,20 @@ def _llm_node(state: RagState, llm: ChatGroq) -> RagState:
     response = str(result.content).strip()
 
     # Confidence is currently heuristic until retrieval/grounding evaluator is added.
-    confidence = 92 if state.get("citations") else 75
+    has_docs = bool(state.get("doc_context"))
+    has_citations = bool(state.get("citations"))
+    if has_docs and has_citations:
+        confidence = 95
+    elif has_citations:
+        confidence = 92
+    elif has_docs:
+        confidence = 85
+    else:
+        confidence = 75
     return {"response": response, "confidence": confidence}
 
 
-def run_rag_chat(db: Session, user_id: str, query: str, llm: ChatGroq) -> dict[str, Any]:
+def run_rag_chat(db: Session, user_id: str, query: str, llm: ChatGroq, doc_context: str = "") -> dict[str, Any]:
     workflow = StateGraph(RagState)
 
     workflow.add_node("retrieve", lambda s: _retrieve_node(s, db))
@@ -67,7 +85,7 @@ def run_rag_chat(db: Session, user_id: str, query: str, llm: ChatGroq) -> dict[s
     workflow.add_edge("generate", END)
 
     app = workflow.compile()
-    final_state = app.invoke({"user_id": user_id, "query": query})
+    final_state = app.invoke({"user_id": user_id, "query": query, "doc_context": doc_context})
 
     return {
         "response": final_state.get("response", ""),

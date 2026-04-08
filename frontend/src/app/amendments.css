@@ -431,3 +431,48 @@
   font-size: 0.875rem;
   color: var(--color-on-surface-variant);
 }
+
+.change-diff-unified {
+  background: var(--color-surface-container-high);
+  border: 1px solid rgba(198, 197, 212, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 0.75rem;
+  margin-top: 1rem;
+}
+
+.unified-diff {
+  font-family: var(--font-family-sans);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.diff-added-word {
+  background-color: rgba(46, 125, 50, 0.15);
+  color: #1b5e20;
+  text-decoration: none;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+
+.diff-removed-word {
+  background-color: rgba(198, 40, 40, 0.15);
+  color: #c62828;
+  text-decoration: line-through;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+
+[data-theme="dark"] .diff-added-word {
+  background-color: rgba(129, 199, 132, 0.2);
+  color: #81c784;
+}
+
+[data-theme="dark"] .diff-removed-word {
+  background-color: rgba(229, 115, 115, 0.2);
+  color: #e57373;
+}
+
+.diff-unchanged-word {
+  color: var(--color-on-surface-variant);
+}

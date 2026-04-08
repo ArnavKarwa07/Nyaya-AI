@@ -1,9 +1,9 @@
 # NyayaLens AI 🇮🇳
-## Self-Learning Indian Legal & Policy Intelligence Platform
+## Indian Legal Document Analysis Platform
 
-NyayaLens AI is an advanced AI system designed to analyze Indian legal and policy documents using Deep Learning, NLP, and Cognitive Computing.
+NyayaLens AI is an AI-powered system for analyzing Indian legal and policy documents using RAG (Retrieval-Augmented Generation) and large language models.
 
-Unlike traditional document analyzers, NyayaLens AI continuously improves through feedback loops, reasoning memory, and adaptive indexing.
+Provides intelligent document analysis, legal Q&A, and cross-document conflict detection tailored to Indian legislative structures.
 
 ---
 
@@ -12,25 +12,24 @@ Unlike traditional document analyzers, NyayaLens AI continuously improves throug
 Upload Indian legal or government documents and the platform will:
 
 - Generate structured summaries
-- Answer clause-level legal queries
-- Detect cross-act contradictions
-- Build a legal knowledge graph
-- Predict policy impact
-- Learn from user feedback to improve over time
+- Answer clause-level legal queries using document context
+- Detect cross-act contradictions and conflicts
+- Track amendments across document versions
+- Provide citation and source tracking
 
 ---
 
-## 🧠 Self-Learning System
+## 🏗️ Current Implementation
 
-NyayaLens AI evolves continuously using:
+NyayaLens AI is an MVP with core functionality:
 
-- User feedback signals
-- Query success tracking
-- Retrieval accuracy evaluation
-- Adaptive embedding updates
-- Reasoning memory storage
+- RAG-based retrieval using uploaded documents
+- Real-time legal chat with context awareness
+- Conflict detection across acts
+- Amendment and version tracking
+- Chat history and audit trails
 
-The system improves document understanding without retraining full models.
+Future roadmap includes adaptive learning components.
 
 ---
 

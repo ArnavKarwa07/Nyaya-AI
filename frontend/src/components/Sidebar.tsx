@@ -14,6 +14,7 @@ export default function Sidebar() {
       filled: false,
     },
     { href: "/chat", label: "Intelligence", icon: "psychology", filled: false },
+    { href: "/summarize", label: "Summarize", icon: "subject", filled: false },
     { href: "/conflicts", label: "Conflicts", icon: "warning", filled: false },
     { href: "/amendments", label: "Amendments", icon: "gavel", filled: false },
   ];
