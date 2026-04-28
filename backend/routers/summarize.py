@@ -29,7 +29,7 @@ def summarize_document(
 ):
     _ = (request, current_user)
     llm = ChatGroq(
-        model=os.getenv("GROQ_MODEL", "mixtral-8x7b-32768"),
+        model=os.getenv("GROQ_MODEL", "llama-3.1-8b-instant"),
         api_key=os.getenv("GROQ_API_KEY", ""),
     )
 

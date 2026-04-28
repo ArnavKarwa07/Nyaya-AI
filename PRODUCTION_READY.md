@@ -326,7 +326,7 @@ ALLOWED_ORIGINS="http://localhost:3000,http://192.168.x.x:3000"
 
 # LLM Configuration
 GROQ_API_KEY="gsk_xxxxx"  # Get from https://console.groq.com
-GROQ_MODEL="mixtral-8x7b-32768"
+GROQ_MODEL="mixtral-8x7b"
 
 # Optional Database
 DATABASE_URL="sqlite:///./sql_app.db"
@@ -341,7 +341,7 @@ DOCUMENTS_UPLOAD_DIR="backend/uploads"
 JWT_SECRET_KEY=your-random-secret-key-here
 JWT_EXPIRE_MINUTES=1440
 GROQ_API_KEY=gsk_your_actual_key
-GROQ_MODEL=mixtral-8x7b-32768
+GROQ_MODEL=mixtral-8x7b
 ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
 ```
 
