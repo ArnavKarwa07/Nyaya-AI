@@ -52,6 +52,11 @@ DATASET_CONFIG = [
         "source": "backend/data/supreme_court_precedents.json",
     },
     {
+        "file": "bombay_amendment_sections.json",
+        "code": "BOMBAY_AMENDMENT",
+        "source": "backend/data/bombay_amendment_sections.json",
+    },
+    {
         "file": "ipc_full_sections.json",
         "code": "IPC",
         "source": "backend/data/ipc_full_sections.json",
@@ -87,6 +92,15 @@ ACT_MARKERS: list[tuple[str, str]] = [
     ("indian evidence act", "EVIDENCE_ACT"),
     ("bharatiya sakshya", "EVIDENCE_ACT"),
     ("indian contract act", "CONTRACT_ACT"),
+    ("bombay prohibition", "BOMBAY_AMENDMENT"),
+    ("bombay police act", "BOMBAY_AMENDMENT"),
+    ("bombay prevention of gambling", "BOMBAY_AMENDMENT"),
+    ("mcoca", "BOMBAY_AMENDMENT"),
+    ("maharashtra control of organised crime", "BOMBAY_AMENDMENT"),
+    ("maharashtra rent control", "BOMBAY_AMENDMENT"),
+    ("bombay amendment", "BOMBAY_AMENDMENT"),
+    ("maharashtra amendment", "BOMBAY_AMENDMENT"),
+    ("mpid act", "BOMBAY_AMENDMENT"),
 ]
 
 
@@ -133,6 +147,8 @@ def _get_dynamic_dataset_config() -> list[dict[str, str]]:
             code = "EVIDENCE_ACT"
         elif "contract" in lowered:
             code = "CONTRACT_ACT"
+        elif "bombay" in lowered or "mcoca" in lowered or "maharashtra" in lowered:
+            code = "BOMBAY_AMENDMENT"
 
         dynamic.append(
             {

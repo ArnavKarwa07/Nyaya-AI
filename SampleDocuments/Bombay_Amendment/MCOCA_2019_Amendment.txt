@@ -1,0 +1,65 @@
+MAHARASHTRA CONTROL OF ORGANISED CRIME ACT, 1999
+(Maharashtra Act No. XXX of 1999)
+[As amended up to 2019, including Maharashtra Act No. X of 2019]
+
+An Act to make special provisions for prevention and control of, and for coping with, criminal activity by organised crime syndicate or gang, and for matters connected therewith or incidental thereto.
+
+CHAPTER I - PRELIMINARY
+
+Section 1. Short title, extent, commencement and application.
+(1) This Act may be called the Maharashtra Control of Organised Crime Act, 1999.
+(2) It extends to the whole of the State of Maharashtra.
+(3) It shall come into force on such date as the State Government may, by notification in the Official Gazette, appoint.
+(4) It shall apply also to the scheduled offences committed in any other State if such offences have been committed in furtherance of the objective of an organised crime syndicate which operates in or has links to the State of Maharashtra.
+(5) It shall apply to acts of organised crime committed through cyber means or electronic communication systems having any nexus with the State of Maharashtra.
+
+Section 2. Definitions.
+(1) In this Act, unless the context otherwise requires—
+(d) "continuing unlawful activity" means an activity prohibited by law for the time being in force, which is a cognizable offence punishable with imprisonment of three years or more, undertaken either singly or jointly, as a member of an organised crime syndicate or on behalf of such syndicate in respect of which more than one charge-sheet has been filed before a competent Court within the preceding period of ten years, and that Court has taken cognizance of such offence;
+(da) "cyber organised crime" means any organised crime committed through the use of computer resources, communication devices, or any electronic means, including but not limited to cyber extortion, online fraud syndicates, and digital money laundering networks;
+(e) "organised crime" means any continuing unlawful activity by an individual, singly or jointly, either as a member of an organised crime syndicate or on behalf of such syndicate, by use of violence or threat of violence or intimidation or coercion, or other unlawful means, including cyber means, with the objective of gaining pecuniary benefits, or gaining undue economic or other advantage for himself or any other person or promoting insurgency or terrorism;
+(f) "organised crime syndicate" means a group of two or more persons who, acting either singly or collectively, as a syndicate or gang indulge in activities of organised crime, including through electronic networks or virtual means;
+(fa) "proceeds of organised crime" means any property derived or obtained, directly or indirectly, by any person as a result of criminal activity relating to organised crime.
+
+CHAPTER II - OFFENCES AND PENALTIES
+
+Section 3. Punishment for organised crime.
+(1) Whoever commits an offence of organised crime shall—
+(i) if such offence has resulted in the death of any person, be punishable with death or imprisonment for life and shall also be liable to a fine of a minimum of one lakh rupees;
+(ii) in any other case, be punishable with imprisonment for a term which shall not be less than five years but which may extend to imprisonment for life and shall also be liable to a fine of a minimum of five lakh rupees.
+(2) Whoever conspires or attempts to commit or advocates, abets or knowingly facilitates the commission of an offence of organised crime or any act preparatory to organised crime, shall be punishable with imprisonment for a term which shall not be less than five years but which may extend to imprisonment for life and shall also be liable to a fine of minimum one lakh rupees.
+(3) Whoever harbours or conceals or attempts to harbour or conceal any member of an organised crime syndicate shall be punishable with imprisonment for a term which shall not be less than five years but which may extend to imprisonment for life and shall also be liable to a fine of minimum one lakh rupees.
+(4) Any person who is a member of an organised crime syndicate and who is, or at any time has been, in possession of movable or immovable property which he cannot satisfactorily account for, shall be punishable with imprisonment for a term which shall not be less than three years but which may extend to ten years and shall also be liable to fine of minimum one lakh rupees.
+
+Section 3A. Punishment for cyber organised crime.
+[Inserted by Amendment]
+Whoever commits cyber organised crime shall be punishable with imprisonment for a term which shall not be less than five years but which may extend to imprisonment for life and shall also be liable to a fine of a minimum of ten lakh rupees. The Special Court may also order the forfeiture of all computer resources, electronic devices, and digital assets used in the commission of the offence.
+
+Section 4. Punishment for possessing arms and explosives in certain areas.
+Whoever in any area declared to be a disturbed area possesses any arms, explosives, or chemical or biological substances of such nature as may be notified, in contravention of any law for the time being in force, shall be punishable with imprisonment for a term which may extend to imprisonment for life and shall also be liable to fine.
+
+CHAPTER IV - DESIGNATED COURTS
+
+Section 9. Trial of offences by Special Courts.
+(1) Notwithstanding anything contained in the Code of Criminal Procedure, 1973, all offences under this Act shall be triable only by the Special Court constituted under this Act.
+(2) The State Government shall, by notification in the Official Gazette, establish one or more Special Courts for the trial of offences under this Act.
+(3) The Special Court shall have the power to try offences under this Act using video-conferencing facilities and electronic means for recording evidence.
+
+Section 16. Modified application of certain provisions of CrPC.
+No person accused of an offence punishable under this Act shall be released on bail or on his own bond unless—
+(a) the Public Prosecutor has been given an opportunity to oppose the application for such release; and
+(b) where the Public Prosecutor opposes the application, the Court is satisfied that there are reasonable grounds for believing that he is not guilty of such offence and that he is not likely to commit any offence while on bail.
+(c) where the accusation involves cyber organised crime, the Court shall additionally satisfy itself that the accused will not tamper with electronic evidence or access any computer resources used in the commission of the offence.
+
+CHAPTER V - EVIDENCE
+
+Section 18. Certain confessions made to police officers to be taken into consideration.
+Notwithstanding anything in the Code of Criminal Procedure, 1973 or in the Indian Evidence Act, 1872, but subject to the provisions of this section, a confession made by a person before a police officer not lower in rank than the Superintendent of Police and recorded by such police officer either in writing or on any mechanical or electronic device including audio-video recording, digital voice recorders, or any other device from which sounds or images can be reproduced, shall be admissible in the trial of such person for an offence under this Act.
+
+Section 19. Protection of witnesses.
+The Special Court may, on an application made by a witness in any proceeding before it or by the Public Prosecutor in relation to such witness or on its own motion, take such measures as it deems fit for keeping the identity and address of the witness secret, including conducting proceedings in camera and using voice modulation and screen technology.
+
+Section 24. Interception of wire, electronic or oral communication.
+Notwithstanding anything contained in any other law for the time being in force, any police officer not below the rank of Superintendent of Police supervising the investigation of an offence under this Act may submit an application to the competent authority for an order for the interception of wire, electronic, or oral communication, including encrypted digital communication, if there are reasonable grounds to believe that such interception may provide evidence of an offence under this Act.
+
+Note: The 2019 Amendment significantly expanded MCOCA to address modern threats including cyber organised crime, digital money laundering, and online fraud syndicates. Key changes include: (1) New definition of "cyber organised crime" under Section 2(1)(da); (2) Expanded definition of "organised crime" to include cyber means and terrorism; (3) New Section 3(4) for unexplained wealth of syndicate members; (4) New Section 3A for cyber organised crime with enhanced penalties; (5) Video-conferencing for Special Court proceedings; (6) Enhanced bail restrictions for cyber offences; (7) Digital recording admissibility; (8) Encrypted communication interception powers.
